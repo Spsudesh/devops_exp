@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 320px;
+            margin: 60px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        input, button {
+            box-sizing: border-box;
+            font-size: 18px;
+            margin: 6px 0;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .buttons {
+            display: grid;
+            gap: 8px;
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .buttons button {
+            margin: 0;
+        }
+
+        #result {
+            min-height: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Calculator</h1>
+
+    <input type="number" id="number1" placeholder="First number">
+    <input type="number" id="number2" placeholder="Second number">
+
+    <div class="buttons">
+        <button type="button" onclick="chooseOperation('+')">+</button>
+        <button type="button" onclick="chooseOperation('-')">−</button>
+        <button type="button" onclick="chooseOperation('*')">×</button>
+        <button type="button" onclick="chooseOperation('/')">÷</button>
+        <button type="button" onclick="calculate()">=</button>
+    </div>
+
+    <p id="result" aria-live="polite">Choose an operation.</p>
+
+    <script>
+        let operation = "";
+
+        function chooseOperation(operator) {
+            operation = operator;
+            document.getElementById("result").textContent =
+                "Selected: " + operator;
+        }
+
+        function calculate() {
+            const first = document.getElementById("number1").value;
+            const second = document.getElementById("number2").value;
+            const result = document.getElementById("result");
+
+            if (first === "" || second === "" || operation === "") {
+                result.textContent = "Enter two numbers and choose an operation.";
+                return;
+            }
+
+            const a = Number(first);
+            const b = Number(second);
+            let answer;
+
+            switch (operation) {
+                case "+":
+                    answer = a + b;
+                    break;
+                case "-":
+                    answer = a - b;
+                    break;
+                case "*":
+                    answer = a * b;
+                    break;
+                case "/":
+                    if (b === 0) {
+                        result.textContent = "Cannot divide by zero.";
+                        return;
+                    }
+                    answer = a / b;
+                    break;
+            }
+
+            result.textContent = "Result: " + answer;
+        }
+    </script>
+</body>
+</html>
